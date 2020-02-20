@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .aa{
+            text-indent: 100px;
+        }
+    </style>
+</head>
+
+<body>
+   <p class="aa">aasdasdsdasdasdasdasa &times;</p>
+   <u>sssssss</u>
+   <s>ssssddadadadada</s>
+   <select name="aa" id="aa" size="2">
+       <option value="s">s</option>
+       <option value="a">a</option>
+   </select>
+   <!-- <marquee behavior="scroll" direction="left" scrollamount="50" loop="100">
+       <h1>我是滚动弹幕啊我是滚动弹幕啊啊</h1>
+   </marquee> -->
+</body>
+    <script>
+        //工厂模式
+        // function cc(name,age){
+        //     var o = new Object();
+        //     o.name = name;
+        //     o.age = age;
+        //     o.sayName = function(){
+        //         console.log(this.name);
+        //     };
+        //     return o;
+        // }
+        // var bb =  cc('张反射',33);
+        // var dd =  cc('张222',4444);
+        // console.log(bb);
+        // console.log(dd);
+
+        //构造函数模式
+        // function createPerson(name,age){
+        //     this.name = name;
+        //     this.age = age;
+        //     this.sayName = function(){
+        //         console.log(this.name)
+        //     }
+        // }
+        // var cc = new createPerson('hhhh',12);
+        // var dd = new  createPerson('ccccc',22);
+        // console.log(cc,dd)
+
+        //原型模式
+        function Person(name,age){
+            Person.prototype.name = name;
+            Person.prototype.age = age;
+            Person.prototype.sayName = function(){
+                console.log(this.name)
+            }
+        }
+
+        var a = new Person('哈哈哈',44);
+        var b = new Person('liului',55);
+        console.log(a);
+        console.log(b);
+    </script>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //工厂模式 无法显示到底创建了什么对象类型
+    // function createPerson(name,age){
+    //     var o = new Object();
+    //     o.name = name;
+    //     o.age = age;
+    //     o.sayName = function(){
+    //         console.log(this.name);
+    //     };
+    //     return o;
+    // }
+    // var person1 = createPerson('nico',29);
+    // console.log(person1)
+
+    //构造函数模式 构造函数名字始终以大写字母开头，使用构造函数的主要问题，就是每个方法都要在每个
+    //实例上重新创建一遍。
+    // function  Person(name,age){
+    //     this.name = name;
+    //     this.age = age;
+    //     this.sayName = function(){
+    //         console.log(this.name);
+    //     }
+    // };
+    // var person1 = new Person('nico',29);
+    // console.log(person1)
+
+    //原型模式 Person.prototype.constructor = Person, var person1 = new Person. person1._proto_ = Person.prototype;
+    // function Person(){
+    //     Person.prototype.name = 'nico';
+    //     Person.prototype.age = 29;
+    //     Person.prototype.sayName = function(){
+    //         console.log(this.name);
+    //     }
+    // };
+    // var person1 = new Person();
+    // person1.sayName();
+
+    //更简单的原型语法
+    // function Person() {}//重写原型对象切断了现有原型与任何之前已经存在的对象实例之间的联系；它
+    // //们引用的仍然是最初的原型。
+    // Person.prototype = {
+    //     constructor: Person, //注意将constructor设置为Person
+    //     name: "Nicholas",
+    //     age: 29,
+    //     job: "Software Engineer",
+    //     sayName: function () {
+    //         alert(this.name);
+    //     }
+    // };
+    // Object.defineProperty(Person.prototype, "constructor", { //这么做是因为上述做法将constructor变为可枚举的了
+    //     enumerable: false,
+    //     value: Person
+    // });
+
+    //原型对象的问题
+    //原型中所有属性是被很多实例共享的，这种共享对于函数非常合适。对于那些包含基本值的属性倒
+    // 也说得过去，毕竟（如前面的例子所示），通过在实例上添加一个同名属性，可以隐藏原型中的对应属
+    // 性。然而，对于包含引用类型值的属性来说，问题就比较突出了。
+    // function Person() {}
+    // Person.prototype = {
+    //     constructor: Person,
+    //     name: "Nicholas",
+    //     age: 29,
+    //     job: "Software Engineer",
+    //     friends: ["Shelby", "Court"],
+    //     sayName: function () {
+    //         alert(this.name);
+    //     }
+    // };
+    // var person1 = new Person();
+    // var person2 = new Person();
+    // person1.friends.push("Van");
+    // alert(person1.friends); //"Shelby,Court,Van"
+    // alert(person2.friends); //"Shelby,Court,Van"
+    // alert(person1.friends === person2.friends); //true
+
+
+    //组合使用构造函数和原型模式
+    //     创建自定义类型的最常见方式，就是组合使用构造函数模式与原型模式。构造函数模式用于定义实
+    // 例属性，而原型模式用于定义方法和共享的属性。结果，每个实例都会有自己的一份实例属性的副本，
+    // 但同时又共享着对方法的引用，最大限度地节省了内存。另外，这种混成模式还支持向构造函数传递参
+    // 数；可谓是集两种模式之长。
+
+    // function Person(name, age, job) {
+    //     this.name = name;
+    //     this.age = age;
+    //     this.job = job;
+    //     this.friends = ["Shelby", "Court"];
+    // }
+    // Person.prototype = {
+    //     constructor: Person,
+    //     sayName: function () {
+    //         alert(this.name);
+    //     }
+    // }
+    // var person1 = new Person("Nicholas", 29, "Software Engineer");
+    // var person2 = new Person("Greg", 27, "Doctor");
+
+    //动态原型模式
+    // function Person(name, age) {
+    //     this.name = name;
+    //     this.age = age;
+
+    //     if (typeof this.sayName != "function") {
+    //         Person.prototype.sayName = function () {
+    //             alert(this.name);
+    //         };
+    //     }
+    // };
+
+    // 寄生构造函数模式
+    // function Person(name, age, job) {
+    //     var o = new Object();
+    //     o.name = name;
+    //     o.age = age;
+    //     o.job = job;
+    //     o.sayName = function () {
+    //         alert(this.name);
+    //     };
+    //     return o;
+    // }
+    // var friend = new Person("Nicholas", 29, "Software Engineer");
+    // friend.sayName(); //"Nicholas"
+
+    //稳妥构造函数模式
+    //     所谓稳妥对象，指的是没有公共属性，而且其方法也不引用this 的对象。稳妥对象最适合在
+    // 一些安全的环境中（这些环境中会禁止使用this 和new），或者在防止数据被其他应用程序（如Mashup
+    // 程序）改动时使用。稳妥构造函数遵循与寄生构造函数类似的模式，但有两点不同：一是新创建对象的
+    // 实例方法不引用this；二是不使用new 操作符调用构造函数。
+
+    // function Person(name, age, job) {
+    //     //创建要返回的对象
+    //     var o = new Object();
+    //     //可以在这里定义私有变量和函数
+    //     //添加方法
+    //     o.sayName = function () {
+    //         alert(name);
+    //     };
+    //     //返回对象
+    //     return o;
+    // }
+//     这样，变量friend 中保存的是一个稳妥对象，而除了调用sayName()方法外，没有别的方式可
+// 以访问其数据成员。即使有其他代码会给这个对象添加方法或数据成员，但也不可能有别的办法访问传
+// 入到构造函数中的原始数据
+</script>
+
+</html>
